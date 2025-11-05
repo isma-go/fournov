@@ -1,0 +1,98 @@
+:root {
+    --bg: #0b0b0c;
+    --fg: #fafafa;
+    --muted: #b4b4b7;
+    --tile-bg: #151517;
+    --tile-border: #2a2a2e;
+    --tile-hover: #1d1d21;
+    --radius: 14px;
+    --gap: 14px;
+    --font: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  }
+  
+  * { box-sizing: border-box; }
+  
+  html, body {
+    height: 100%;
+  }
+  
+  body {
+    margin: 0;
+    background: radial-gradient(90vw 90vh at 10% 10%, #0f0f12, #0b0b0c);
+    color: var(--fg);
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.2;
+  }
+  
+  .viewport-grid {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: var(--gap);
+    padding: calc(var(--gap) * 1.2);
+  }
+  
+  .tile {
+    display: block;
+    background: var(--tile-bg);
+    border: 1px solid var(--tile-border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--fg);
+    position: relative;
+    overflow: clip;
+    padding: 18px;
+    transition: transform .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+    cursor: grab;
+  }
+  
+  .tile:hover,
+  .tile:focus-visible {
+    background: var(--tile-hover);
+    border-color: #3a3a40;
+    transform: translateY(-2px);
+    outline: none;
+    box-shadow: 0 12px 30px rgba(0,0,0,.35);
+  }
+  
+  .tile h2 {
+    margin: 0;
+    font-size: clamp(18px, 2.4vw, 28px);
+    font-weight: 600;
+  }
+
+  /* Drag and drop states */
+  .tile.dragging {
+    opacity: .85;
+    transform: scale(.98);
+    cursor: grabbing;
+    box-shadow: 0 18px 40px rgba(0,0,0,.45);
+  }
+
+  .tile.placeholder {
+    visibility: hidden;
+  }
+
+  /* Subtle entry animation */
+  @keyframes floatIn {
+    from { opacity: 0; transform: translateY(6px) scale(.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .tile { animation: floatIn .35s ease both; }
+  
+  @media (max-width: 900px) {
+    .viewport-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(3, minmax(0, 1fr));
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .viewport-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(6, minmax(0, 1fr));
+    }
+  }
